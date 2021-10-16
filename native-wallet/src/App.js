@@ -2,226 +2,85 @@ import './App.css';
 
 import Web3 from "web3";
 import Web3Modal from "web3modal";
+import WalletConnectProvider from "@walletconnect/web3-provider";
+import Fortmatic from "fortmatic";
 import React from 'react';
+import abi from './abi';
 
 const providerOptions = {
-  /* See Provider Options Section */
+  walletconnect: {
+    package: WalletConnectProvider,
+    options: {
+      infuraId: "1c96603e022b4d97a08b70a95afae845"
+    }
+  },
+  fortmatic: {
+    package: Fortmatic,
+    options: {
+      key: "pk_live_25EF4591AD77C3F5"
+    }
+  },
 };
 
 const web3Modal = new Web3Modal({
-  network: "mainnet", // optional
-  cacheProvider: true, // optional
-  providerOptions // required
+  network: "mainnet",
+  providerOptions,
+  theme: "dark"
 });
-
-const abi = [
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "spender",
-        "type": "address"
-      },
-      {
-        "name": "tokens",
-        "type": "uint256"
-      }
-    ],
-    "name": "approve",
-    "outputs": [
-      {
-        "name": "success",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "totalSupply",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "from",
-        "type": "address"
-      },
-      {
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "name": "tokens",
-        "type": "uint256"
-      }
-    ],
-    "name": "transferFrom",
-    "outputs": [
-      {
-        "name": "success",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "tokenOwner",
-        "type": "address"
-      }
-    ],
-    "name": "balanceOf",
-    "outputs": [
-      {
-        "name": "balance",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "name": "tokens",
-        "type": "uint256"
-      }
-    ],
-    "name": "transfer",
-    "outputs": [
-      {
-        "name": "success",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "tokenOwner",
-        "type": "address"
-      },
-      {
-        "name": "spender",
-        "type": "address"
-      }
-    ],
-    "name": "allowance",
-    "outputs": [
-      {
-        "name": "remaining",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "name": "from",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "name": "tokens",
-        "type": "uint256"
-      }
-    ],
-    "name": "Transfer",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "name": "tokenOwner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "name": "spender",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "name": "tokens",
-        "type": "uint256"
-      }
-    ],
-    "name": "Approval",
-    "type": "event"
-  }
-];
-
 
 function App() {
   const [isConnected, setIsConnected] = React.useState(false);
   const [balance, setBalance] = React.useState(0);
+  const [provider, setProvider] = React.useState(null);
+  const disconnectWallet = (() => {
+    console.log("Killing the wallet connection", provider);
+    if (provider.close) {
+      provider.close().then(() => {
+        // If the cached provider is not cleared,
+        // WalletConnect will default to the existing session
+        // and does not allow to re-scan the QR code with a new wallet.
+        // Depending on your use case you may want or want not his behavir.
+        web3Modal.clearCachedProvider();
+        setProvider(null);
+        setIsConnected(false);
+      });
+    } else {
+      web3Modal.clearCachedProvider();
+      setProvider(null);
+      setIsConnected(false);
+    }
+  
+    //selectedAccount = null;
+  });
   const connectWallet = (() => {
+    if (web3Modal.cachedProvider) {
+      web3Modal.clearCachedProvider();
+    }
     web3Modal.connect().then((provider) => {
-      console.log("connected");
+      setProvider(provider);
       const web3 = new Web3(provider);
       setIsConnected(true);
-      console.log(web3);
       const tokenInst = new web3.eth.Contract(abi, '0x7f6fECB0D79fC1B325ae064788bf3c0e6dE8e35B');
-      console.log(tokenInst);
-      console.log(web3.eth.accounts[0]);
-      console.log(web3.eth);
-      // TODO: Verify wallet ownership
-      web3.eth.sign(web3.currentProvider.selectedAddress, web3.utils.sha3('test'), function (err, signature) {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        tokenInst.methods.balanceOf(web3.currentProvider.selectedAddress).call().then((result) => {
+      web3.eth.getAccounts().then((accs) => {
+        const selectedAccount = accs[0];
+        tokenInst.methods.balanceOf(selectedAccount).call().then((result) => {
           setBalance(result/1000000);
         });
       });
+      // TODO: Verify wallet ownership
+
     });
   });
-  console.log(isConnected);
   return (
     <div className="App">
       {!isConnected &&
       <button onClick={connectWallet}>
         Connect Wallet
+      </button>
+      }
+    {isConnected &&
+      <button onClick={disconnectWallet}>
+        Disconnect Wallet
       </button>
       }
       {isConnected && balance >= 1 &&
@@ -234,7 +93,7 @@ function App() {
       }
 
       {isConnected && balance < 1 &&
-        <span>Sorry babe you dont own enough tokenz.</span>
+        <span>Sorry babe you dont own enough tokenz (You own {balance} DRKSANGLZ).</span>
       }
     </div>
   );
