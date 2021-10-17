@@ -4,7 +4,7 @@ module.exports.handler = async (event) => {
   console.log('Event: ', event);
   let responseMessage = 'Hello, World!';
 
-  if (!event.queryStringParameters || !validateInput(event.queryStringParameters)) {
+  if (validateInput(event.queryStringParameters).length > 0) {
     return {
       statusCode: 400,
       headers: {
@@ -29,11 +29,12 @@ module.exports.handler = async (event) => {
 
 const validateInput = (queryStringParameters) => {
   const requiredParams = ['wallet', 'nonce'];
+  if (!queryStringParameters) return requiredParams;
 
   const missingParams = [];
 
   requiredParams.forEach((param) => {
-    if (!queryStringParameters['Name']) {
+    if (!queryStringParameters[param]) {
       missingParams.push(param);
     }
   });
