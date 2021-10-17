@@ -71,12 +71,17 @@ function App() {
 
     });
   });
+  const metamaskUrl = 'https://metamask.app.link/dapp/' + window.location.href.replace('https://', '');
   return (
     <div className="App">
       {!isConnected &&
-      <button onClick={connectWallet}>
+      <div><button onClick={connectWallet}>
         Connect Wallet
       </button>
+      <a target="_blank" href={metamaskUrl}>
+        Open in Metamask Mobile Wallet
+      </a>
+      </div>
       }
     {isConnected &&
       <button onClick={disconnectWallet}>
