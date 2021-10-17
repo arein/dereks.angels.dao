@@ -1,4 +1,4 @@
-// Lambda function code
+const pass = require('./pass');
 
 module.exports.handler = async (event) => {
   console.log('Event: ', event);
@@ -15,16 +15,16 @@ module.exports.handler = async (event) => {
       }),
     }
   }
-
-  return {
-    statusCode: 200,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      message: responseMessage,
-    }),
-  }
+  pass.getPass().then((buffer) => {
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/vnd.apple.pkpass',
+      },
+      body: buffer.toString('base64'),
+      isBase64Encoded: true
+    }
+  });
 }
 
 const validateInput = (queryStringParameters) => {

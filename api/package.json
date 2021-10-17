@@ -1,0 +1,16 @@
+{
+  "name": "native-wallet-api",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@walletpass/pass-js": "^6.9.1"
+  },
+  "scripts": {
+    "test": "mocha 'wallet-pass-generator/**/*.js' --timeout 20000",
+    "deploy": "terraform apply"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^9.1.3"
+  }
+}
