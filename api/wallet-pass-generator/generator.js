@@ -18,9 +18,8 @@ module.exports.handler = async (event) => {
   return pass.getPass().then((buffer) => {
     console.log("Created Pass");
     return {
-      statusCode: 200,
       headers: {
-        'Content-Disposition': 'attachment; "angelsgate.pkpass"',
+        'Content-Disposition': 'attachment; filename="angelsgate.pkpass"',
         'Content-Type': 'application/vnd.apple.pkpass',
       },
       body: buffer.toString('base64'),
