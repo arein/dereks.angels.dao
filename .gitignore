@@ -2,6 +2,7 @@
 native-wallet/yarn.lock
 api/node_modules/
 api/keys/
+api/wallet-pass-generator/node_modules/
 # Local .terraform directories
 **/.terraform/*
 api/wallet-pass-generator.zip
@@ -38,4 +39,7 @@ override.tf.json
 terraform.rc
 hello-world.zip
 response.json
-
+package-lock.json
+yarn.lock
+api/.terraform.lock.hcl
+api/yarn-error.log
