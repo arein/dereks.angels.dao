@@ -61,6 +61,14 @@ resource "aws_lambda_function" "wallet_pass_generator" {
   source_code_hash = data.archive_file.lambda_wallet_pass_generator.output_base64sha256
 
   role = aws_iam_role.lambda_exec.arn
+
+  environment {
+    variables = {
+      PRIVATE_KEY_PW = var.PRIVATE_KEY_PW
+      CERT = var.CERT
+      PRIVATE_KEY = var.PRIVATE_KEY
+    }
+  }
 }
 
 resource "aws_cloudwatch_log_group" "wallet_pass_generator" {
