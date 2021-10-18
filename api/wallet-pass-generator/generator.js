@@ -24,6 +24,16 @@ module.exports.handler = async (event) => {
       body: buffer.toString('base64'),
       isBase64Encoded: true
     }
+  }).catch((err) => {
+    return {
+      statusCode: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: err.message,
+      }),
+    }
   });
 }
 

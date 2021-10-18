@@ -1,4 +1,5 @@
 const { Template } = require("@walletpass/pass-js");
+
 // Create a Template from local folder, see __test__/resources/passes for examples
 // .load will load all fields from pass.json,
 // as well as all images and com.example.passbook.pem file as key
