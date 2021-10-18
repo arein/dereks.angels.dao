@@ -9,7 +9,7 @@ api/wallet-pass-generator.zip
 # .tfstate files
 *.tfstate
 *.tfstate.*
-
+api/wallet-pass-generator/keys/
 # Crash log files
 crash.log
 
