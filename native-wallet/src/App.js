@@ -28,13 +28,15 @@ const web3Modal = new Web3Modal({
   theme: "dark"
 });
 
-const passUrl = 'https://czvicq0j5k.execute-api.us-east-1.amazonaws.com/serverless_lambda_stage/generate?wallet=abc&nonce=true';
-
 function App() {
   const [isConnected, setIsConnected] = React.useState(false);
   const [balance, setBalance] = React.useState(0);
   const [provider, setProvider] = React.useState(null);
   const [web3, setWeb3] = React.useState(null);
+  const [selectedAccount, setSelectedAccount] = React.useState(null);
+  const [nonce, setNonce] = React.useState(null);
+
+  const passUrl = `https://czvicq0j5k.execute-api.us-east-1.amazonaws.com/serverless_lambda_stage/generate?wallet=${selectedAccount}&nonce=${nonce}`;
   const disconnectWallet = (() => {
     console.log("Killing the wallet connection", provider);
     if (provider.close) {
@@ -53,7 +55,7 @@ function App() {
       setIsConnected(false);
     }
   
-    //selectedAccount = null;
+    setSelectedAccount(null);
   });
   const connectWallet = (() => {
     if (web3Modal.cachedProvider) {
@@ -67,15 +69,17 @@ function App() {
       const tokenInst = new web3.eth.Contract(abi, '0x7f6fECB0D79fC1B325ae064788bf3c0e6dE8e35B');
       web3.eth.getAccounts().then((accs) => {
         const selectedAccount = accs[0];
+        setSelectedAccount(selectedAccount);
         tokenInst.methods.balanceOf(selectedAccount).call().then((result) => {
-          setBalance(result/1000000);
+          setBalance(parseInt(result/1000000));
         });
       });
-      // TODO: Verify wallet ownership
     });
   });
   const getWalletPass = () => {
-    web3.personal.sign(web3.fromUtf8("Hello from Toptal!"), web3.eth.coinbase, console.log);
+    web3.eth.sign(web3.utils.sha3(`I own ${balance} tokens`), selectedAccount).then((nonce) => {
+      setNonce(nonce);
+    });
   };
   const metamaskUrl = 'https://metamask.app.link/dapp/' + window.location.href.replace('https://', '');
   return (
@@ -84,7 +88,7 @@ function App() {
       <div><button onClick={connectWallet}>
         Connect Wallet
       </button>
-      <a target="_blank" href={metamaskUrl}>
+      <a target="_blank" rel="noreferrer" href={metamaskUrl}>
         Open in Metamask Mobile Wallet
       </a>
       </div>
@@ -94,14 +98,19 @@ function App() {
         Disconnect Wallet
       </button>
       }
-      {isConnected && balance >= 1 &&
+      {isConnected && balance >= 1 && !nonce &&
         <div>
           <span>Congrats. You own {balance} DRKSANGLZ. Get your Apple Wallet pass.</span>
           <button onClick={getWalletPass}>
             Get your Apple Wallet Card
           </button>
-          <a target="_blank" href={passUrl}>
-            PassUrl
+        </div>
+      }
+
+      {isConnected && balance >= 1 && nonce &&
+        <div>
+          <a target="_blank" rel="noreferrer" href={passUrl}>
+            Download Pass
           </a>
         </div>
       }
@@ -114,3 +123,4 @@ function App() {
 }
 
 export default App;
+
