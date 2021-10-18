@@ -5,7 +5,9 @@ const pass = require('./pass');
 
 describe('Pass Generator Test', () => {
     it('should create a pass', (done) => {
-        pass.getPass().then(done).catch((err) => {
+        pass.getPass().then((buffer) => {
+            done();
+        }).catch((err) => {
             done(err);
         });
     });

@@ -4,17 +4,19 @@ const { Template } = require("@walletpass/pass-js");
 // as well as all images and com.example.passbook.pem file as key
 // and localization string too
 
+const passCert = process.env.CERT;
+const passKey = process.env.PRIVATE_KEY;
+const passKeyPw = process.env.PRIVATE_KEY_PW;
+
 const getPass = () => {
-    console.log('go');
     return new Promise((resolve, reject) => {
-        console.log('go2');
         try {
-            console.log('go3');
             Template.load(
                 __dirname + "/Event.pass",
-                "secretKeyPassword"
+                ""
             ).then((template) => {
-                console.log('go4');
+                template.setCertificate(passCert);
+                template.setPrivateKey(passKey, passKeyPw);
                 const pass = template.createPass({
                     serialNumber: "123456",
                     description: "20% off"
@@ -25,11 +27,11 @@ const getPass = () => {
                 }).catch((err) => {
                     reject(err);
                 });
+                
             }).catch((err) => {
                 reject(err);
             });
         } catch (err) {
-            console.log('go4');
             reject(err);
         }
     });
