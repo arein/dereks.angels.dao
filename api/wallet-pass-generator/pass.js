@@ -6,7 +6,7 @@ const passKeyPw = process.env.PRIVATE_KEY_PW;
 const getPass = () => {
     return new Promise((resolve, reject) => {
         try {
-            const template = new Template("coupon", {
+            const template = new Template("storeCard", {
                 passTypeIdentifier: "pass.com.dereks.angels.gate",
                 teamIdentifier: "Q338UYGFZ8",
                 backgroundColor: "red",
