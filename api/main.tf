@@ -65,8 +65,6 @@ resource "aws_lambda_function" "wallet_pass_generator" {
   environment {
     variables = {
       PRIVATE_KEY_PW = var.PRIVATE_KEY_PW
-      CERT = var.CERT
-      PRIVATE_KEY = var.PRIVATE_KEY
     }
   }
 }

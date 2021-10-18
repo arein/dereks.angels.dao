@@ -7,14 +7,6 @@ variable "aws_region" {
   default = "us-east-1"
 }
 
-variable "PRIVATE_KEY" {
-  type = string
-}
-
-variable "CERT" {
-  type = string
-}
-
 variable "PRIVATE_KEY_PW" {
   type = string
 }
