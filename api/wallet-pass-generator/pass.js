@@ -84,7 +84,8 @@ const getPass = () => {
                 teamIdentifier: "Q338UYGFZ8",
                 backgroundColor: "red",
                 sharingProhibited: true,
-                organizationName: "DereksAngels"
+                organizationName: "DereksAngels",
+                logoText: "Derek's Angels"
             });
             template.setCertificate(passCert);
             template.setPrivateKey(passKey, passKeyPw);
@@ -93,7 +94,10 @@ const getPass = () => {
                 template.images.add("logo", __dirname + "/Event.pass/logo.png").then((images) => {
                     const pass = template.createPass({
                         serialNumber: "123457",
-                        description: "Hello world"
+                        description: "Token Gate",
+                        nfc: {
+                            message: "hello"
+                        }
                     });
                     pass.asBuffer().then((buffer) => {
                         resolve(buffer);
@@ -102,10 +106,6 @@ const getPass = () => {
                     });
                 });
             });
-            
-            
-    
-            
         } catch (err) {
             reject(err);
         }
