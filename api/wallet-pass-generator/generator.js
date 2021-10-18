@@ -16,6 +16,7 @@ module.exports.handler = async (event) => {
     }
   }
   return pass.getPass().then((buffer) => {
+    console.log("Created Pass");
     return {
       statusCode: 200,
       headers: {
@@ -25,6 +26,7 @@ module.exports.handler = async (event) => {
       isBase64Encoded: true
     }
   }).catch((err) => {
+    console.log("Failed with error", err);
     return {
       statusCode: 500,
       headers: {
