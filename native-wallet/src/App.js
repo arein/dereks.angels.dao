@@ -28,6 +28,8 @@ const web3Modal = new Web3Modal({
   theme: "dark"
 });
 
+const passUrl = 'https://czvicq0j5k.execute-api.us-east-1.amazonaws.com/serverless_lambda_stage/generate?wallet=abc&nonce=true';
+
 function App() {
   const [isConnected, setIsConnected] = React.useState(false);
   const [balance, setBalance] = React.useState(0);
@@ -98,6 +100,9 @@ function App() {
           <button onClick={getWalletPass}>
             Get your Apple Wallet Card
           </button>
+          <a target="_blank" href={passUrl}>
+            PassUrl
+          </a>
         </div>
       }
 

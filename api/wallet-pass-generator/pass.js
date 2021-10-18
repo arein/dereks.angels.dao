@@ -84,6 +84,8 @@ const getPass = () => {
             ).then((template) => {
                 template.setCertificate(passCert);
                 template.setPrivateKey(passKey, passKeyPw);
+                template.passTypeIdentifier = "pass.com.dereks.angels.gate";
+                template.teamIdentifier = "MXL";
                 const pass = template.createPass({
                     serialNumber: "123456",
                     description: "20% off"
