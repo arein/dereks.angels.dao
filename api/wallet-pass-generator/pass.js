@@ -78,25 +78,21 @@ const passKeyPw = process.env.PRIVATE_KEY_PW;
 const getPass = () => {
     return new Promise((resolve, reject) => {
         try {
-            Template.load(
-                __dirname + "/Event.pass",
-                ""
-            ).then((template) => {
-                template.setCertificate(passCert);
-                template.setPrivateKey(passKey, passKeyPw);
-                template.passTypeIdentifier = "pass.com.dereks.angels.gate";
-                template.teamIdentifier = "MXL";
-                const pass = template.createPass({
-                    serialNumber: "123456",
-                    description: "20% off"
-                });
-        
-                pass.asBuffer().then((buffer) => {
-                    resolve(buffer);
-                }).catch((err) => {
-                    reject(err);
-                });
-                
+            const template = new Template("coupon", {
+                passTypeIdentifier: "pass.com.dereks.angels.gate",
+                teamIdentifier: "MXL",
+                backgroundColor: "red",
+                sharingProhibited: true
+            });
+            template.setCertificate(passCert);
+            template.setPrivateKey(passKey, passKeyPw);
+            const pass = template.createPass({
+                serialNumber: "123456",
+                description: "20% off"
+            });
+    
+            pass.asBuffer().then((buffer) => {
+                resolve(buffer);
             }).catch((err) => {
                 reject(err);
             });
