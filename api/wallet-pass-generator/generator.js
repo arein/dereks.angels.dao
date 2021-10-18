@@ -15,7 +15,7 @@ module.exports.handler = async (event) => {
       }),
     }
   }
-  pass.getPass().then((buffer) => {
+  return pass.getPass().then((buffer) => {
     return {
       statusCode: 200,
       headers: {
