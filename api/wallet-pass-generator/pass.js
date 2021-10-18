@@ -14,8 +14,9 @@ const getPass = () => {
                 organizationName: "DereksAngels",
                 logoText: "Derek's Angels"
             });
-            template.setCertificate(fs.readFileSync(__dirname + "/keys/cert.pem"));
-            template.setPrivateKey(fs.readFileSync(__dirname + "/keys/key.pem"), passKeyPw);
+            template.setCertificate(fs.readFileSync(__dirname + "/keys/cert.pem").toString());
+            template.setPrivateKey(fs.readFileSync(__dirname + "/keys/key.pem").toString(), passKeyPw);
+            const pubKey = fs.readFileSync(__dirname + "/keys/encryptionPublicKey.pem").toString();
             
             template.images.add("icon", fs.readFileSync(__dirname + "/Event.pass/icon.png")).then((images) => {
                 template.images.add("logo", __dirname + "/Event.pass/logo.png").then((images) => {
@@ -24,7 +25,7 @@ const getPass = () => {
                         description: "Token Gate",
                         nfc: {
                             message: "HelloRichard, my love <3",
-                            encryptionPublicKey: fs.readFileSync(__dirname + "/keys/encryptionPublicKey.pem")
+                            encryptionPublicKey: pubKey
                         }
                     });
                     pass.asBuffer().then((buffer) => {
