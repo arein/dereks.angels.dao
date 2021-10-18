@@ -20,6 +20,7 @@ module.exports.handler = async (event) => {
     return {
       statusCode: 200,
       headers: {
+        'Content-Disposition': 'attachment; "angelsgate.pkpass"',
         'Content-Type': 'application/vnd.apple.pkpass',
       },
       body: buffer.toString('base64'),
