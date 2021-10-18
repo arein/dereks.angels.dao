@@ -19,7 +19,7 @@ module.exports.handler = async (event) => {
     console.log("Created Pass");
     return {
       headers: {
-        'Content-Disposition': 'attachment; filename="angelsgate.pkpass"',
+        'Content-Disposition': 'attachment;filename=angelsgate.pkpass',
         'Content-Type': 'application/vnd.apple.pkpass',
       },
       body: buffer.toString('base64'),
