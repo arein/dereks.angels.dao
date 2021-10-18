@@ -57,10 +57,17 @@ resource "aws_lambda_function" "wallet_pass_generator" {
 
   runtime = "nodejs12.x"
   handler = "generator.handler"
+  timeout = 25
 
   source_code_hash = data.archive_file.lambda_wallet_pass_generator.output_base64sha256
 
   role = aws_iam_role.lambda_exec.arn
+
+  environment {
+    variables = {
+      PRIVATE_KEY_PW = var.PRIVATE_KEY_PW
+    }
+  }
 }
 
 resource "aws_cloudwatch_log_group" "wallet_pass_generator" {

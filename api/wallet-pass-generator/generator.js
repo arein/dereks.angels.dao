@@ -15,7 +15,8 @@ module.exports.handler = async (event) => {
       }),
     }
   }
-  pass.getPass().then((buffer) => {
+  return pass.getPass().then((buffer) => {
+    console.log("Created Pass");
     return {
       statusCode: 200,
       headers: {
@@ -23,6 +24,17 @@ module.exports.handler = async (event) => {
       },
       body: buffer.toString('base64'),
       isBase64Encoded: true
+    }
+  }).catch((err) => {
+    console.log("Failed with error", err);
+    return {
+      statusCode: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: err.message,
+      }),
     }
   });
 }

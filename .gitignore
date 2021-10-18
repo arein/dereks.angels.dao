@@ -1,8 +1,10 @@
 .env
+native-wallet/yarn.lock
 api/node_modules/
+api/keys/
 # Local .terraform directories
 **/.terraform/*
-
+api/wallet-pass-generator.zip
 # .tfstate files
 *.tfstate
 *.tfstate.*

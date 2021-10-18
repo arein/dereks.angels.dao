@@ -28,10 +28,13 @@ const web3Modal = new Web3Modal({
   theme: "dark"
 });
 
+const passUrl = 'https://czvicq0j5k.execute-api.us-east-1.amazonaws.com/serverless_lambda_stage/generate?wallet=abc&nonce=true';
+
 function App() {
   const [isConnected, setIsConnected] = React.useState(false);
   const [balance, setBalance] = React.useState(0);
   const [provider, setProvider] = React.useState(null);
+  const [web3, setWeb3] = React.useState(null);
   const disconnectWallet = (() => {
     console.log("Killing the wallet connection", provider);
     if (provider.close) {
@@ -59,6 +62,7 @@ function App() {
     web3Modal.connect().then((provider) => {
       setProvider(provider);
       const web3 = new Web3(provider);
+      setWeb3(web3);
       setIsConnected(true);
       const tokenInst = new web3.eth.Contract(abi, '0x7f6fECB0D79fC1B325ae064788bf3c0e6dE8e35B');
       web3.eth.getAccounts().then((accs) => {
@@ -68,9 +72,11 @@ function App() {
         });
       });
       // TODO: Verify wallet ownership
-
     });
   });
+  const getWalletPass = () => {
+    web3.personal.sign(web3.fromUtf8("Hello from Toptal!"), web3.eth.coinbase, console.log);
+  };
   const metamaskUrl = 'https://metamask.app.link/dapp/' + window.location.href.replace('https://', '');
   return (
     <div className="App">
@@ -91,9 +97,12 @@ function App() {
       {isConnected && balance >= 1 &&
         <div>
           <span>Congrats. You own {balance} DRKSANGLZ. Get your Apple Wallet pass.</span>
-          <button onClick={connectWallet}>
+          <button onClick={getWalletPass}>
             Get your Apple Wallet Card
           </button>
+          <a target="_blank" href={passUrl}>
+            PassUrl
+          </a>
         </div>
       }
 
