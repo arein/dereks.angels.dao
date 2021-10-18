@@ -17,13 +17,25 @@ module.exports.handler = async (event) => {
   }
   return pass.getPass().then((buffer) => {
     console.log("Created Pass");
-    return {
-      headers: {
-        'Content-Disposition': 'attachment;filename=angelsgate.pkpass',
-        'Content-Type': 'application/vnd.apple.pkpass',
-      },
-      body: buffer.toString('base64'),
-      isBase64Encoded: true
+    try {
+      return {
+        headers: {
+          'Content-Disposition': 'attachment;filename=angelsgate.pkpass',
+          'Content-Type': 'application/vnd.apple.pkpass',
+        },
+        body: buffer.toString('base64'),
+        isBase64Encoded: true
+      }
+    } catch (err) {
+      return {
+        statusCode: 500,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: err.message,
+        }),
+      }
     }
   }).catch((err) => {
     console.log("Failed with error", err);
