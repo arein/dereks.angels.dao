@@ -81,10 +81,10 @@ const getPass = () => {
         try {
             const template = new Template("coupon", {
                 passTypeIdentifier: "pass.com.dereks.angels.gate",
-                teamIdentifier: "MXL",
+                teamIdentifier: "Q338UYGFZ8",
                 backgroundColor: "red",
                 sharingProhibited: true,
-                organizationName: "Derek's Angels"
+                organizationName: "DereksAngels"
             });
             template.setCertificate(passCert);
             template.setPrivateKey(passKey, passKeyPw);
@@ -92,8 +92,8 @@ const getPass = () => {
             template.images.add("icon", fs.readFileSync(__dirname + "/Event.pass/icon.png")).then((images) => {
                 template.images.add("logo", __dirname + "/Event.pass/logo.png").then((images) => {
                     const pass = template.createPass({
-                        serialNumber: "123456",
-                        description: "20% off"
+                        serialNumber: "123457",
+                        description: "Hello world"
                     });
                     pass.asBuffer().then((buffer) => {
                         resolve(buffer);
