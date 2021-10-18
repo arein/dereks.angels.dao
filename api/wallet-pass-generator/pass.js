@@ -23,7 +23,8 @@ const getPass = () => {
                         serialNumber: "123457",
                         description: "Token Gate",
                         nfc: {
-                            message: "hello"
+                            message: "HelloRichard, my love <3",
+                            encryptionPublicKey: fs.readFileSync(__dirname + "/keys/encryptionPublicKey.pem")
                         }
                     });
                     pass.asBuffer().then((buffer) => {
