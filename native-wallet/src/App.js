@@ -36,7 +36,9 @@ function App() {
   const [selectedAccount, setSelectedAccount] = React.useState(null);
   const [nonce, setNonce] = React.useState(null);
 
-  const passUrl = `https://czvicq0j5k.execute-api.us-east-1.amazonaws.com/serverless_lambda_stage/generate?wallet=${selectedAccount}&nonce=${nonce}`;
+  // Prepending with safari forces to open link in Safari
+  const isIphone = navigator.userAgent.toLowerCase().includes('iphone');
+  const passUrl = `${endpoint}/serverless_lambda_stage/generate?wallet=${selectedAccount}&nonce=${nonce}`;
   const disconnectWallet = (() => {
     console.log("Killing the wallet connection", provider);
     if (provider.close) {
@@ -81,9 +83,18 @@ function App() {
       setNonce(nonce);
     });
   };
+  const openLink = () => {
+    window.open(passUrl, "_self");
+  };
   const metamaskUrl = 'https://metamask.app.link/dapp/' + window.location.href.replace('https://', '');
   return (
     <div className="App">
+      {!isIphone &&
+        <div>
+          <span>WARNING: You're not on an iPhone. This app only works on iPhones :(</span>
+          <br/>
+        </div>
+      }
       {!isConnected &&
       <div><button onClick={connectWallet}>
         Connect Wallet
@@ -101,6 +112,7 @@ function App() {
       {isConnected && balance >= 1 && !nonce &&
         <div>
           <span>Congrats. You own {balance} DRKSANGLZ. Get your Apple Wallet pass.</span>
+          <br/>
           <button onClick={getWalletPass}>
             Get your Apple Wallet Card
           </button>
