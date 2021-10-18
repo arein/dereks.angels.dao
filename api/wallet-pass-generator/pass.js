@@ -1,4 +1,5 @@
 const { Template } = require("@walletpass/pass-js");
+var fs = require('fs');
 
 // Create a Template from local folder, see __test__/resources/passes for examples
 // .load will load all fields from pass.json,
@@ -82,20 +83,29 @@ const getPass = () => {
                 passTypeIdentifier: "pass.com.dereks.angels.gate",
                 teamIdentifier: "MXL",
                 backgroundColor: "red",
-                sharingProhibited: true
+                sharingProhibited: true,
+                organizationName: "Derek's Angels"
             });
             template.setCertificate(passCert);
             template.setPrivateKey(passKey, passKeyPw);
-            const pass = template.createPass({
-                serialNumber: "123456",
-                description: "20% off"
+            
+            template.images.add("icon", fs.readFileSync(__dirname + "/Event.pass/icon.png")).then((images) => {
+                template.images.add("logo", __dirname + "/Event.pass/logo.png").then((images) => {
+                    const pass = template.createPass({
+                        serialNumber: "123456",
+                        description: "20% off"
+                    });
+                    pass.asBuffer().then((buffer) => {
+                        resolve(buffer);
+                    }).catch((err) => {
+                        reject(err);
+                    });
+                });
             });
+            
+            
     
-            pass.asBuffer().then((buffer) => {
-                resolve(buffer);
-            }).catch((err) => {
-                reject(err);
-            });
+            
         } catch (err) {
             reject(err);
         }
