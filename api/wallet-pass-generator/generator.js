@@ -19,6 +19,7 @@ module.exports.handler = async (event) => {
     console.log("Created Pass");
     try {
       return {
+        statusCode: 200,
         headers: {
           'Content-Disposition': 'attachment;filename=angelsgate.pkpass',
           'Content-Type': 'application/vnd.apple.pkpass',
@@ -27,6 +28,7 @@ module.exports.handler = async (event) => {
         isBase64Encoded: true
       }
     } catch (err) {
+      console.log("Failed with error", err);
       return {
         statusCode: 500,
         headers: {
