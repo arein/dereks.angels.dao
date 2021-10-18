@@ -2,10 +2,24 @@ import './App.css';
 
 import Web3 from "web3";
 import Web3Modal from "web3modal";
+import WalletConnectProvider from "@walletconnect/web3-provider";
+import Fortmatic from "fortmatic";
 import React from 'react';
 import abi from './abi';
 
 const providerOptions = {
+  walletconnect: {
+    package: WalletConnectProvider,
+    options: {
+      infuraId: "1c96603e022b4d97a08b70a95afae845"
+    }
+  },
+  fortmatic: {
+    package: Fortmatic,
+    options: {
+      key: "pk_live_25EF4591AD77C3F5"
+    }
+  },
 };
 
 const web3Modal = new Web3Modal({
