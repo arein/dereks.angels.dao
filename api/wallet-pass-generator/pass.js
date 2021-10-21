@@ -11,7 +11,6 @@ const getPass = () => {
                 passTypeIdentifier: "pass.com.dereks.angels.gate",
                 teamIdentifier: "Q338UYGFZ8",
                 backgroundColor: "white",
-                sharingProhibited: true,
                 organizationName: "DereksAngels",
                 logoText: "Derek's Angels",
                 sharingProhibited: false
@@ -22,8 +21,8 @@ const getPass = () => {
 
             Promise.all([
                 template.images.add("icon", fs.readFileSync(__dirname + "/Event.pass/icon.png")),
-                template.images.add("logo", fs.readFileSync(__dirname + "/Event.pass/logo.png"), "2x"),
-                template.images.add("icon", fs.readFileSync(__dirname + "/Event.pass/icon@2x.png")),
+                template.images.add("logo", fs.readFileSync(__dirname + "/Event.pass/logo.png")),
+                template.images.add("icon", fs.readFileSync(__dirname + "/Event.pass/icon@2x.png"), "2x"),
                 template.images.add("logo", fs.readFileSync(__dirname + "/Event.pass/logo@2x.png"), "2x")
             ]).then(() => {
                 const pass = template.createPass({
