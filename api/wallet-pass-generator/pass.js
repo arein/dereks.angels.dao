@@ -1,6 +1,5 @@
 const { Template } = require("@walletpass/pass-js");
 var fs = require('fs');
-var truncate = require("truncate-utf8-bytes")
 
 const passKeyPw = process.env.PRIVATE_KEY_PW;
 
@@ -30,7 +29,7 @@ const getPass = () => {
                     serialNumber: "123457",
                     description: "Token Gate",
                     nfc: {
-                        message: truncate("HelloRichard, my love <3", 64),
+                        message: "HelloRichard, my love <3",
                         encryptionPublicKey: pubKey
                     }
                 });
