@@ -22,8 +22,10 @@ const getPass = () => {
             Promise.all([
                 template.images.add("icon", fs.readFileSync(__dirname + "/Event.pass/icon.png")),
                 template.images.add("logo", fs.readFileSync(__dirname + "/Event.pass/logo.png")),
+                template.images.add("logo", fs.readFileSync(__dirname + "/Event.pass/background.png")),
                 template.images.add("icon", fs.readFileSync(__dirname + "/Event.pass/icon@2x.png"), "2x"),
-                template.images.add("logo", fs.readFileSync(__dirname + "/Event.pass/logo@2x.png"), "2x")
+                template.images.add("logo", fs.readFileSync(__dirname + "/Event.pass/logo@2x.png"), "2x"),
+                template.images.add("logo", fs.readFileSync(__dirname + "/Event.pass/background@2x.png"), "2x")
             ]).then(() => {
                 const pass = template.createPass({
                     serialNumber: "123457",
