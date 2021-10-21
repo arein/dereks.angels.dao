@@ -28,6 +28,8 @@ const web3Modal = new Web3Modal({
   theme: "dark"
 });
 
+const endpoint = 'https://tuwh2es8zj.execute-api.us-east-1.amazonaws.com';
+
 function App() {
   const [isConnected, setIsConnected] = React.useState(false);
   const [balance, setBalance] = React.useState(0);
@@ -89,6 +91,7 @@ function App() {
   const metamaskUrl = 'https://metamask.app.link/dapp/' + window.location.href.replace('https://', '');
   return (
     <div className="App">
+      <img width="400" src="https://arweave.net/p5Fu6gXNiS-utxgWQ4vhuXJTART3KEIdtmEsT-FPvvg" alt="Derek's Angels" />
       {!isIphone &&
         <div>
           <span>WARNING: You're not on an iPhone. This app only works on iPhones :(</span>
@@ -96,9 +99,16 @@ function App() {
         </div>
       }
       {!isConnected &&
+      <div>
+        <h1>Want to connect with us in Meatspace?</h1>
+        <h3>If you own $DRKSANGLZ you can use this app to create your Apple Wallet pass to unlock our world</h3>
+      </div>
+      }
+      {!isConnected &&
       <div><button onClick={connectWallet}>
         Connect Wallet
       </button>
+      <br/>
       <a target="_blank" rel="noreferrer" href={metamaskUrl}>
         Open in Metamask Mobile Wallet
       </a>

@@ -1,5 +1,6 @@
 const { Template } = require("@walletpass/pass-js");
 var fs = require('fs');
+var truncate = require("truncate-utf8-bytes")
 
 const passKeyPw = process.env.PRIVATE_KEY_PW;
 
@@ -9,7 +10,7 @@ const getPass = () => {
             const template = new Template("storeCard", {
                 passTypeIdentifier: "pass.com.dereks.angels.gate",
                 teamIdentifier: "Q338UYGFZ8",
-                backgroundColor: "red",
+                backgroundColor: "white",
                 sharingProhibited: true,
                 organizationName: "DereksAngels",
                 logoText: "Derek's Angels",
@@ -25,7 +26,7 @@ const getPass = () => {
                         serialNumber: "123457",
                         description: "Token Gate",
                         nfc: {
-                            message: "HelloRichard, my love <3",
+                            message: truncate("HelloRichard, my love <3", 64),
                             encryptionPublicKey: pubKey
                         }
                     });
