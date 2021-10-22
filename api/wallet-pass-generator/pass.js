@@ -1,4 +1,3 @@
-const require = require('esm')(module);
 const { Template } = require("@walletpass/pass-js");
 var fs = require('fs');
 
