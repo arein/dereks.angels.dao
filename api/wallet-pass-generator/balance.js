@@ -1,3 +1,4 @@
+const require = require('esm')(module);
 const Web3 = require("web3");
 const Web3Client = new Web3(new Web3.providers.WebsocketProvider("wss://mainnet.infura.io/ws/v3/1c96603e022b4d97a08b70a95afae845"));
 const abi = require('./abi');
