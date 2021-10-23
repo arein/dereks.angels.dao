@@ -19,8 +19,8 @@ module.exports.handler = async (event) => {
     }
   }
   
-  const wallet = queryStringParameters['wallet'];
-  const signature = queryStringParameters['nonce'];
+  const wallet = event.queryStringParameters['wallet'];
+  const signature = event.queryStringParameters['nonce'];
   balance.getBalance(contract, wallet).then((balance) => {
     auth.isOwner(signature, wallet, balance).then((isOwner) => {
       if (!isOwner) {
