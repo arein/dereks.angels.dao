@@ -26,7 +26,7 @@ module.exports.handler = async (event) => {
     return auth.isOwner(signature, wallet, balance).then((isOwner) => {
       console.log('is owner', isOwner);
       if (!isOwner) {
-        console.log("Failed with error", err);
+        console.log("You're not an owner", isOwner);
         return {
           statusCode: 403,
           headers: {
