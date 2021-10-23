@@ -22,11 +22,13 @@ module.exports.handler = async (event) => {
   const wallet = event.queryStringParameters['wallet'];
   const signature = event.queryStringParameters['nonce'];
   balance.getBalance(contract, wallet).then((balance) => {
+    console.log("balance is", balance);
     auth.isOwner(signature, wallet, balance).then((isOwner) => {
+      console.log('is owner', isOwner);
       if (!isOwner) {
         console.log("Failed with error", err);
         return {
-          statusCode: 500,
+          statusCode: 403,
           headers: {
             'Content-Type': 'application/json',
           },
