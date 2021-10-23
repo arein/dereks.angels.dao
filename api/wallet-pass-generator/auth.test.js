@@ -1,6 +1,5 @@
 const auth = require('./auth');
 
-
 describe('Authn Test', () => {
     it('should login', (done) => {
         auth.isOwner(

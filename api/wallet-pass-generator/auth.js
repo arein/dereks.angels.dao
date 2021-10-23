@@ -1,7 +1,7 @@
 var ethSigUtil = require('eth-sig-util');
 var ethUtil = require('ethereumjs-util');
 
-const authn = (signature, publicAddress, balance) => {
+const isOwner = (signature, publicAddress, balance) => {
     return new Promise((resolve, reject) => {
         const msg = `I own ${balance} tokens`;
 
@@ -23,4 +23,4 @@ const authn = (signature, publicAddress, balance) => {
     });
 };
 
-module.exports.authn = authn;
+module.exports.isOwner = isOwner;
