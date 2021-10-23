@@ -15,7 +15,8 @@ const authn = (signature, publicAddress, balance) => {
             data: msgBufferHex,
             sig: signature,
         });
-        console.log(address);
+        console.log('address', address);
+        console.log('provided address ', publicAddress);
     
         // The signature verification is successful if the address found with
         // sigUtil.recoverPersonalSignature matches the initial publicAddress
