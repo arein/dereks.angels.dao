@@ -1,4 +1,4 @@
-module.exports.api = [
+module.exports.abi = [
     {
       "constant": false,
       "inputs": [

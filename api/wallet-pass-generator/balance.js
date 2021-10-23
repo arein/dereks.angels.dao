@@ -4,7 +4,7 @@ var abi = require('./abi');
 
 
 const getBalance = (tokenAddress, walletAddress) => {
-    const contract = new Web3Client.eth.Contract(abi, tokenAddress);
+    const contract = new Web3Client.eth.Contract(abi.abi, tokenAddress);
     return new Promise((resolve, reject) => {
         const result = contract.methods.balanceOf(walletAddress).call().then((result) => {
             const format = Web3Client.utils.fromWei(result);
