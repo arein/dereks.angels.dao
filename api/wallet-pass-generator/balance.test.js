@@ -1,6 +1,6 @@
 const assert = require('assert');
 const expect = require('chai');
-const pass = require('./balance');
+const balance = require('./balance');
 
 
 describe('Balance Test', () => {
