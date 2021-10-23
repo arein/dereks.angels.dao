@@ -8,7 +8,7 @@ const getBalance = (tokenAddress, walletAddress) => {
     return new Promise((resolve, reject) => {
         contract.methods.balanceOf(walletAddress).call().then((result) => {
             const format = Web3Client.utils.fromWei(result);
-            return resolve(parseInt(result / 1000));
+            return resolve(parseInt(result / 1000000));
         }).catch((error) => reject(error));
     });
 };

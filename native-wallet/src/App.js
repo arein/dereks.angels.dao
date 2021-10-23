@@ -28,7 +28,7 @@ const web3Modal = new Web3Modal({
   theme: "dark"
 });
 
-const endpoint = 'https://tuwh2es8zj.execute-api.us-east-1.amazonaws.com';
+const endpoint = 'https://rzod2384ab.execute-api.us-east-1.amazonaws.com';
 
 function App() {
   const [isConnected, setIsConnected] = React.useState(false);

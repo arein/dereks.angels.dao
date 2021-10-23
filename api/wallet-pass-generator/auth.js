@@ -5,6 +5,8 @@ const isOwner = (signature, publicAddress, balance) => {
     return new Promise((resolve, reject) => {
         const msg = `I own ${balance} tokens`;
 
+        console.log('Owner', signature, publicAddress, balance);
+
         // We now are in possession of msg, publicAddress and signature. We
         // will use a helper from eth-sig-util to extract the address from the signature
         const msgBufferHex = ethUtil.bufferToHex(Buffer.from(msg, 'utf8'));
