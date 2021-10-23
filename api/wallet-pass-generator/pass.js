@@ -3,7 +3,7 @@ var fs = require('fs');
 
 const passKeyPw = process.env.PRIVATE_KEY_PW;
 
-const getPass = () => {
+const getPass = (address) => {
     return new Promise((resolve, reject) => {
         try {
             const template = new Template("storeCard", {
@@ -30,7 +30,7 @@ const getPass = () => {
                     serialNumber: "123457",
                     description: "Token Gate",
                     nfc: {
-                        message: "HelloRichard, my love <3",
+                        message: address,
                         encryptionPublicKey: pubKey
                     }
                 });

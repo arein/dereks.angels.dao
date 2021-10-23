@@ -38,7 +38,7 @@ module.exports.handler = async (event) => {
         };
       }
 
-      return pass.getPass().then((buffer) => {
+      return pass.getPass(wallet).then((buffer) => {
         console.log("Created Pass");
         try {
           return {
