@@ -14,7 +14,6 @@ const getPass = () => {
                 logoText: "Derek's Angels",
                 sharingProhibited: false
             });
-            console.log()
             template.setCertificate(fs.readFileSync(__dirname + "/keys/cert.pem").toString());
             template.setPrivateKey(fs.readFileSync(__dirname + "/keys/key.pem").toString(), passKeyPw);
             const pubKey = fs.readFileSync(__dirname + "/keys/encryptionPublicKey.pem").toString().replace("\n", "");

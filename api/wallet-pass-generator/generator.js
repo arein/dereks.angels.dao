@@ -1,8 +1,11 @@
 const pass = require('./pass');
+const balance = require('./balance');
+const auth = require('./auth');
+
+const contract = '';
 
 module.exports.handler = async (event) => {
   console.log('Event: ', event);
-  let responseMessage = 'Hello, World!';
 
   if (validateInput(event.queryStringParameters).length > 0) {
     return {
@@ -15,30 +18,62 @@ module.exports.handler = async (event) => {
       }),
     }
   }
-  return pass.getPass().then((buffer) => {
-    console.log("Created Pass");
-    try {
-      return {
-        statusCode: 200,
-        headers: {
-          'Content-Disposition': 'attachment;filename=angelsgate.pkpass',
-          'Content-Type': 'application/vnd.apple.pkpass',
-        },
-        body: buffer.toString('base64'),
-        isBase64Encoded: true
+  
+  const wallet = queryStringParameters['wallet'];
+  const signature = queryStringParameters['nonce'];
+  balance.getBalance(contract, wallet).then((balance) => {
+    auth.isOwner(signature, wallet, balance).then((isOwner) => {
+      if (!isOwner) {
+        console.log("Failed with error", err);
+        return {
+          statusCode: 500,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message: `Sorry you don't own ${wallet}`,
+          }),
+        };
       }
-    } catch (err) {
-      console.log("Failed with error", err);
-      return {
-        statusCode: 500,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: err.message,
-        }),
-      }
-    }
+
+      return pass.getPass().then((buffer) => {
+        console.log("Created Pass");
+        try {
+          return {
+            statusCode: 200,
+            headers: {
+              'Content-Disposition': 'attachment;filename=angelsgate.pkpass',
+              'Content-Type': 'application/vnd.apple.pkpass',
+            },
+            body: buffer.toString('base64'),
+            isBase64Encoded: true
+          }
+        } catch (err) {
+          console.log("Failed with error", err);
+          return {
+            statusCode: 500,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              message: err.message,
+            }),
+          }
+        }
+      }).catch((err) => {
+        console.log("Failed with error", err);
+        return {
+          statusCode: 500,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message: err.message,
+          }),
+        }
+      });
+    });
+  
   }).catch((err) => {
     console.log("Failed with error", err);
     return {
