@@ -1,5 +1,6 @@
 var ethSigUtil = require('eth-sig-util');
 var ethUtil = require('ethereumjs-util');
+var web3 = require('web3');
 
 const authn = (signature, publicAddress, balance) => {
     return new Promise((resolve, reject) => {
