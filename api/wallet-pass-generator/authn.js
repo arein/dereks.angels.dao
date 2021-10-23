@@ -1,5 +1,5 @@
-import { recoverPersonalSignature } from 'eth-sig-util';
-import { bufferToHex } from 'ethereumjs-util';
+var ethSigUtil = require('eth-sig-util');
+var ethUtil = require('ethereumjs-util');
 
 const authn = (signature, publicAddress, balance) => {
     return new Promise((resolve, reject) => {
@@ -7,8 +7,8 @@ const authn = (signature, publicAddress, balance) => {
 
         // We now are in possession of msg, publicAddress and signature. We
         // will use a helper from eth-sig-util to extract the address from the signature
-        const msgBufferHex = bufferToHex(Buffer.from(msg, 'utf8'));
-        const address = recoverPersonalSignature({
+        const msgBufferHex = ethUtil.bufferToHex(Buffer.from(msg, 'utf8'));
+        const address = ethSigUtil.recoverPersonalSignature({
             data: msgBufferHex,
             sig: signature,
         });
