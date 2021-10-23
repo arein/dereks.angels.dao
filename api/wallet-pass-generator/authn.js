@@ -9,7 +9,7 @@ const authn = (signature, publicAddress, balance) => {
 
         // We now are in possession of msg, publicAddress and signature. We
         // will use a helper from eth-sig-util to extract the address from the signature
-        const msgBufferHex = ethUtil.bufferToHex(web3.utils.sha3(msg));
+        const msgBufferHex = web3.utils.sha3(msg);
         console.log(msgBufferHex);
         const address = ethSigUtil.recoverPersonalSignature({
             data: msgBufferHex,
