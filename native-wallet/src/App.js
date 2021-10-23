@@ -81,7 +81,7 @@ function App() {
     });
   });
   const getWalletPass = () => {
-    web3.eth.sign(web3.utils.sha3(`I own ${balance} tokens`), selectedAccount).then((nonce) => {
+    web3.eth.personal.sign(`I own ${balance} tokens`, selectedAccount).then((nonce) => {
       setNonce(nonce);
     });
   };
