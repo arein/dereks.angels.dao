@@ -18,6 +18,7 @@ module.exports.handler = async (event) => {
       }),
     }
   }
+  
   const wallet = queryStringParameters['wallet'];
   const signature = queryStringParameters['nonce'];
   balance.getBalance(contract, wallet).then((balance) => {
