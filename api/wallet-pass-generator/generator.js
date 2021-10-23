@@ -2,7 +2,7 @@ const pass = require('./pass');
 const balance = require('./balance');
 const auth = require('./auth');
 
-const contract = '';
+const contract = '0x7f6fECB0D79fC1B325ae064788bf3c0e6dE8e35B';
 
 module.exports.handler = async (event) => {
   console.log('Event: ', event);
